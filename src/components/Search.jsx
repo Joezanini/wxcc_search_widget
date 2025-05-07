@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect }from 'react'
 import { CloseButton, Input, InputGroup } from '@chakra-ui/react'
 import { useRef, useState } from "react"
 import Result from './Result.jsx'
 import useDebounce from "../hooks/useDebounce.jsx"
+import { Desktop } from "@wxcc-desktop/sdk";
 
 function Search() {
 
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 1000);
+
+  useEffect(async () => {
+    await Desktop.config.init();
+    console.log('WxCC local : ', Desktop.config.clientLocale);
+  }, [])
 
 
   const searchRef = useRef(null)
